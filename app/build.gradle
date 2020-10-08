@@ -1,0 +1,114 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
+//apply plugin: 'com.google.gms.google-services'
+//apply plugin: 'com.google.firebase.crashlytics'
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.2"
+
+    signingConfigs {
+        debug {
+            storeFile file("../debug.jks")
+            storePassword 'android'
+            keyAlias 'debug'
+            keyPassword 'android'
+        }
+    }
+
+    defaultConfig {
+        applicationId "com.starter"
+        minSdkVersion 21
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0.0"
+        multiDexEnabled true
+        signingConfig signingConfigs.debug
+        resConfig "en"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//            firebaseCrashlytics {
+//                mappingFileUploadEnabled false
+//            }
+        }
+        release {
+            shrinkResources true
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    def navigation_version = "2.3.0"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
+
+    def room_version = '2.2.5'
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-rxjava2:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
+    def hilt_version = "2.28-alpha"
+    def hilt_component_version = "1.0.0-alpha02"
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_component_version"
+    kapt "androidx.hilt:hilt-compiler:$hilt_component_version"
+
+    def retrofit_version = '2.9.0'
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
+
+    def okhttp_version = '4.7.2'
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+
+//    def moshi_version = '1.9.3'
+//    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
+//    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
+
+//    implementation 'com.squareup.picasso:picasso:2.71828'
+
+//    def glide_version = '4.11.0'
+//    implementation "com.github.bumptech.glide:glide:$glide_version"
+//    kapt "com.github.bumptech.glide:compiler:$glide_version"
+
+//    def exoplayer_version = '2.10.0'
+//    implementation "com.google.android.exoplayer:exoplayer-core:$exoplayer_version"
+//    implementation "com.google.android.exoplayer:exoplayer-ui:$exoplayer_version"
+
+//    implementation 'com.google.firebase:firebase-analytics-ktx:17.5.0'
+//    implementation 'com.google.firebase:firebase-auth-ktx:19.4.0'
+//    implementation 'com.google.firebase:firebase-database-ktx:19.5.0'
+//    implementation 'com.google.firebase:firebase-messaging:20.3.0'
+//    implementation 'com.google.firebase:firebase-crashlytics-ktx:17.2.2'
+
+    implementation project(':androidmvi')
+    testImplementation 'junit:junit:4.13'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+}

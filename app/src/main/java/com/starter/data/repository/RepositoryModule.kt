@@ -12,8 +12,8 @@ import javax.inject.Singleton
 @InstallIn(ApplicationComponent::class)
 abstract class RepositoryModule {
 
-    @Binds
-    @Singleton
-    abstract fun repository(impl: RepositoryImpl): Repository
+  @Binds
+  @Singleton
+  abstract fun repository(impl: RepositoryImpl): Repository
 
 }

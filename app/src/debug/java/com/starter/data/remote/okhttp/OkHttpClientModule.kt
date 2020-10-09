@@ -13,28 +13,28 @@ import javax.inject.Singleton
 @InstallIn(ApplicationComponent::class)
 object OkHttpClientModule {
 
-    @Provides
-    @Singleton
-    fun okHttpClient(
-        logger: HttpLoggingInterceptor
-    ): OkHttpClient =
-        OkHttpClient()
-            .newBuilder()
-            .addInterceptor(logger)
-            .build()
+  @Provides
+  @Singleton
+  fun okHttpClient(
+    logger: HttpLoggingInterceptor
+  ): OkHttpClient =
+    OkHttpClient()
+      .newBuilder()
+      .addInterceptor(logger)
+      .build()
 
-    @Provides
-    @Singleton
-    fun loggingInterceptor(logger: HttpLoggingInterceptor.Logger): HttpLoggingInterceptor =
-        HttpLoggingInterceptor(logger).setLevel(HttpLoggingInterceptor.Level.BODY)
+  @Provides
+  @Singleton
+  fun loggingInterceptor(logger: HttpLoggingInterceptor.Logger): HttpLoggingInterceptor =
+    HttpLoggingInterceptor(logger).setLevel(HttpLoggingInterceptor.Level.BODY)
 
-    @Provides
-    @Singleton
-    fun logger(): HttpLoggingInterceptor.Logger =
-        object : HttpLoggingInterceptor.Logger {
-            override fun log(message: String) {
-                Logger.d(message)
-            }
-        }
+  @Provides
+  @Singleton
+  fun logger(): HttpLoggingInterceptor.Logger =
+    object : HttpLoggingInterceptor.Logger {
+      override fun log(message: String) {
+        Logger.d(message)
+      }
+    }
 
 }

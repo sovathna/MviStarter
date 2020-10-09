@@ -12,25 +12,25 @@ import java.util.concurrent.TimeUnit
 @AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
 
-    private val disposables = CompositeDisposable()
+  private val disposables = CompositeDisposable()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val op =
-            Completable
-                .complete()
-                .delay(1000, TimeUnit.MILLISECONDS)
-                .subscribe {
-                    val intent = Intent(this, MainActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    startActivity(intent)
-                }
-        disposables.add(op)
-    }
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    val op =
+      Completable
+        .complete()
+        .delay(1000, TimeUnit.MILLISECONDS)
+        .subscribe {
+          val intent = Intent(this, MainActivity::class.java)
+          intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+          startActivity(intent)
+        }
+    disposables.add(op)
+  }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        disposables.clear()
-    }
+  override fun onDestroy() {
+    super.onDestroy()
+    disposables.clear()
+  }
 
 }

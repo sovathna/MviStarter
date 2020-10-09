@@ -18,40 +18,40 @@ import javax.inject.Singleton
 @InstallIn(ApplicationComponent::class)
 object RetrofitModule {
 
-    const val KEY_BASE_URL = "base_url"
+  const val KEY_BASE_URL = "base_url"
 
-    @Provides
-    @Singleton
+  @Provides
+  @Singleton
+  @Named(KEY_BASE_URL)
+  fun baseUrl() = "https://example.com"
+
+  @Provides
+  @Singleton
+  fun callAdapterFactory(): CallAdapter.Factory = RxJava2CallAdapterFactory.createAsync()
+
+  @Provides
+  @Singleton
+  fun converterFactory(moshi: Moshi): Converter.Factory =
+    MoshiConverterFactory.create(moshi).withNullSerialization()
+
+  @Provides
+  @Singleton
+  fun moshi(): Moshi = Moshi.Builder().build()
+
+  @Provides
+  @Singleton
+  fun retrofit(
     @Named(KEY_BASE_URL)
-    fun baseUrl() = "https://example.com"
-
-    @Provides
-    @Singleton
-    fun callAdapterFactory(): CallAdapter.Factory = RxJava2CallAdapterFactory.createAsync()
-
-    @Provides
-    @Singleton
-    fun converterFactory(moshi: Moshi): Converter.Factory =
-        MoshiConverterFactory.create(moshi).withNullSerialization()
-
-    @Provides
-    @Singleton
-    fun moshi(): Moshi = Moshi.Builder().build()
-
-    @Provides
-    @Singleton
-    fun retrofit(
-        @Named(KEY_BASE_URL)
-        baseUrl: String,
-        client: OkHttpClient,
-        callAdapterFactory: CallAdapter.Factory,
-        converterFactory: Converter.Factory
-    ): Retrofit =
-        Retrofit.Builder()
-            .baseUrl(baseUrl)
-            .client(client)
-            .addCallAdapterFactory(callAdapterFactory)
-            .addConverterFactory(converterFactory)
-            .build()
+    baseUrl: String,
+    client: OkHttpClient,
+    callAdapterFactory: CallAdapter.Factory,
+    converterFactory: Converter.Factory
+  ): Retrofit =
+    Retrofit.Builder()
+      .baseUrl(baseUrl)
+      .client(client)
+      .addCallAdapterFactory(callAdapterFactory)
+      .addConverterFactory(converterFactory)
+      .build()
 
 }

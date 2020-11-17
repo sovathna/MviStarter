@@ -18,7 +18,7 @@ import javax.inject.Singleton
 @InstallIn(ApplicationComponent::class)
 object RetrofitModule {
 
-  const val KEY_BASE_URL = "base_url"
+  private const val KEY_BASE_URL = "base_url"
 
   @Provides
   @Singleton

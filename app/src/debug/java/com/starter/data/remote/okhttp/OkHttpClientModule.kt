@@ -31,10 +31,6 @@ object OkHttpClientModule {
   @Provides
   @Singleton
   fun logger(): HttpLoggingInterceptor.Logger =
-    object : HttpLoggingInterceptor.Logger {
-      override fun log(message: String) {
-        Logger.d(message)
-      }
-    }
+    HttpLoggingInterceptor.Logger { message -> Logger.d(message) }
 
 }

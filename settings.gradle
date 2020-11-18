@@ -1,2 +1,1 @@
 include ':app', ':androidmvi'
-rootProject.name = "Mvi Starter"
